@@ -26,16 +26,63 @@
 
 tl;dr: A way to connect two unrelated chains
 
-### Trustful Bridges
-- Typically have some sort of operator in the middle that ensures blocks/transactions are valid
-- This is done when its hard to verify the consensus mechanism of a chain
-- Examples: xDai
+### Types of Bridges
+- Custodial
+- Collateral
+- Trustless
 
-### Trustless Bridges
-- Don't require any sort of operator
-- Consensus is verified independently by the chain
-- Q: Why not make only trustless bridges?
-- A: It's kinda hard.
+---
+
+## Custodial Bridges
+
+[ETH] -> [USDT] -> [BTC]
+
+- You can think of Tether as a custodial bridge
+- You trade your Ether for Tether, which you can swap for BTC
+
+[ETH] -> [Central Party] -> [BTC]
+
+- You send your ETH to the central party
+- Expectation is that they will credit your account with correct amount of BTC
+
+---
+
+## Collateral Backed Bridges
+
+[ETH]            [BTC]
+    \ [Relayer] /
+
+
+- You send your funds to a multisig
+
+[ETH] -> [Multisig]
+
+- Relayer is listening for "proof-of-lock" events from contract
+- Relays these proofs to recepient chain
+
+[Relayer] -> Proof -> [BTC]
+
+- BTC is unlocked on receiving end
+- Relayer submits proof that they actually released funds
+- Important because if challenged they could get slashed on ETH
+
+---
+
+## Trustless Bridges
+
+[ETH] -> [SUB]
+
+- We need to run a light client to verify headers ourselves
+
+[ETH Headers] -> [SUB]
+
+- A light client will track headers of the source chain
+- If applicable, needs to keep track of finality
+
+[ETH Tx] -> [SUB]
+
+- Now we can send an ETH Tx which locks funds
+- Bridge can verify by itself that the Tx is included in a valid block
 
 ---
 
@@ -60,11 +107,74 @@ tl;dr: A way to connect two unrelated chains
 
 ---
 
-<!-- effect=matrix-->
+## Railto Bridge
 
-## Finality
+[PoA Ethereum] <-> [Substrate]
+
+- Two way trustless bridge between an Ethereum PoA chain and a Substrate chain
+- Ethereum chain is using Aura consensus
+- Substrate chain is using Grandpa consensus
 
 ---
-```rust
-let foo = Foo {bar, baz};
+
+## Authority Round (Aura) Consensus
+
+- Blocks are produced at regular intervals by trusted authorities
+- Authorities implicitly vote on blocks by building on blocks
+- A block is considered finalized if it has (n/2) + 1 votes
+- If we had three validators: (3/2) + 1 = 2
+
+[A] <- [B] <- [C]
+        |
+        --- Finalized when C is built
+
+---
+
+## Grandpa Consensus
+
+- Authorities are staked
+- Authorities vote on chains of blocks which they think are final
+- Authority sets change periodically
+- Blocks that signal these changes have a special log in the header
+
 ```
+sp_runtime::DigestItem::Consensus(ConsensusEngineId, Vec<u8>)
+sp_finality_grandpa::ConsensusLog::ScheduledChange
+```
+
+---
+
+<!-- effect=matrix-->
+
+# SHOW ME CODE!
+
+---
+
+## Rialto Architecture
+
+   OpenEthereum Node                    Substrate Node
+
++-------------------+                +-------------------+
+|                   |                |                   |
+| Grandpa Built-In  |                |  Ethereum Bridge  |
+| Contract          |                |  Pallet           |
+|                   |                |                   |
+|                   |                |  Currency Exchange|
+| Grandpa Finality  |                |  Pallet           |
+| Smart Contract    |                |                   |
+|                   |                |                   |
+|                   |                |                   |
+|                   |                |                   |
++-------------------+                +-------------------+
+
+---
+
+## Rialto: Code Walkthrough
+
+- Should maybe walk through repo README to show project layout
+- Could mention deployment process
+- Could metion monitoring tools
+- Walk through the relay node code
+
+
+
