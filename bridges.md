@@ -8,17 +8,15 @@
 ## Presentation Outline
 
 - What is a bridge?
-    - Trustful vs. Trustless
-- Finality
-    - Authority Round
-    - Grandpa
-- Our Bridge
-    - PoA -> Substrate
-    - Substrate -> PoA
-    - Currency Exchange Pallet
-    - Deployment
+- Types of Bridges
+- Rialto Bridge
+    - Brief Interlude: Finality
+    - Architecture
+    - Applications
+- Live Demo
 - Future Plans
     - Substrate <-> Substrate
+    - Becoming a Parachain
 
 ---
 
@@ -72,7 +70,7 @@ tl;dr: A way to connect two unrelated chains
 
 [ETH] -> [SUB]
 
-- We need to run a light client to verify headers ourselves
+- Basically an on-chain light client for a foreign chain
 
 [ETH Headers] -> [SUB]
 
@@ -83,27 +81,6 @@ tl;dr: A way to connect two unrelated chains
 
 - Now we can send an ETH Tx which locks funds
 - Bridge can verify by itself that the Tx is included in a valid block
-
----
-
-## Making a Transfer
-
-[Chain A] ---> [Chain B]
-
-1. Generate block on Chain A
-2. Send block to Chain B*
-3. Chain B must verify integrity of Chain A's block
-4. If Chain B is happy, it accepts it
-
-\* This can be done through a few different ways, but is external to the system
-
----
-
-## Verifying a foreign block
-- Hard because you need to verify a chain's consensus algorithm
-- It takes miners a long time on BTC or ETH to produce a block, now you think you can do
-  it in under 6s on your Substrate chain?
-- Who's to say that this block is even part of the canonical chain?
 
 ---
 
@@ -141,13 +118,6 @@ tl;dr: A way to connect two unrelated chains
 sp_runtime::DigestItem::Consensus(ConsensusEngineId, Vec<u8>)
 sp_finality_grandpa::ConsensusLog::ScheduledChange
 ```
-
----
-
-<!-- effect=matrix-->
-
-# SHOW ME CODE!
-
 ---
 
 ## Rialto Architecture
@@ -169,12 +139,73 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 
 ---
 
-## Rialto: Code Walkthrough
+## Bridge Relay
 
-- Should maybe walk through repo README to show project layout
-- Could mention deployment process
-- Could metion monitoring tools
-- Walk through the relay node code
+[OpenEthereum Node]                 [Substrate Node]
+                  \ [Bridge Relay] /
 
+- The chains can't acutally talk to eachother
+- Need a piece of helper software called a relay
+- Syncs each node and relays messages via RPC
 
+---
 
+## Rialto Applications
+
++--------------------+-------------------+
+|Currency Exchange   | Message Passing   |
+|                    |                   |
++--------------------+-------------------+
+|                                        |
+|    Light Client Base Layer             |
++----------------------------------------+
+
+---
+
+<!-- effect=matrix-->
+
+# SHOW ME CODE!
+
+---
+
+## Future Plans
+
+[DOT] <-> [KSM]
+
+- Want to connect Substrate based chains
+- May be in parachain form
+
+[ETH] <-> [DOT]
+
+- Want to connect Ethereum maininet to Substrate chains
+
+[DOT::Call] <-> [KSM::Call]
+
+- Arbitrary message passing between Substrate chains
+
+---
+
+## Running the Code
+
+- Go to the `parity-bridges-common` repo
+- Can run simple Eth2Sub header sync using scripts in `./scripts` folder
+- Can do a full network deployment with `docker-compose`
+
+---
+## Braindump
+
+- Could show a local version of Eth2Sub first
+    - Give people a feel for the header sync
+    - Show the dashboards
+- Could show Rialto deployment dashboards next
+    - Show them each of the header sync dashboards
+    - Then show them the currency exchange dashboard
+- Could do a code walkthrough after that
+    - Show the Eth pallet
+    - Then the CE pallet
+    - If there's time, talk about the relay
+- Finality, do a demo of the Rialto UI
+    - Send RLT -> SUB
+    - Check to see if others were able to send tokens
+- Can show other bits and bobs
+    - Deployment process
