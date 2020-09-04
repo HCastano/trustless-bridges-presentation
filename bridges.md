@@ -1,22 +1,44 @@
 # Trustless Bridges
 
-### By: Hernando Castano
-### hernando@parity.io
+### By: Hernando Castano | hernando@parity.io
+
+```
+                                           ^^
+      ^^      ..                                       ..
+              []                                       []
+            .:[]:_          ^^                       ,:[]:.
+          .: :[]: :-.                             ,-: :[]: :.
+        .: : :[]: : :`._                       ,.': : :[]: : :.
+      .: : : :[]: : : : :-._               _,-: : : : :[]: : : :.
+  _..: : : : :[]: : : : : : :-._________.-: : : : : : :[]: : : : :-._
+  _:_:_:_:_:_:[]:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:[]:_:_:_:_:_:_
+  !!!!!!!!!!!![]!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!![]!!!!!!!!!!!!!
+  ^^^^^^^^^^^^[]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[]^^^^^^^^^^^^^
+              []                                       []
+              []                                       []
+              []                                       []
+   ~~^-~^_~^~/  \~^-~^~_~^-~_^~-^~_^~~-^~_~^~-~_~-^~_^/  \~^-~_~^-~~-
+  ~ _~~- ~^-^~-^~~- ^~_^-^~~_ -~^_ -~_-~~^- _~~_~-^_ ~^-^~~-_^-~ ~^
+     ~ ^- _~~_-  ~~ _ ~  ^~  - ~~^ _ -  ^~-  ~ _  ~~^  - ~_   - ~^_~
+       ~-  ^_  ~^ -  ^~ _ - ~^~ _   _~^~-  _ ~~^ - _ ~ - _ ~~^ -
+  jgs     ~^ -_ ~^^ -_ ~ _ - _ ~^~-  _~ -_   ~- _ ~^ _ -  ~ ^-
+              ~^~ - _ ^ - ~~~ _ - _ ~-^ ~ __- ~_ - ~  ~^_-
+                  ~ ~- ^~ -  ~^ -  ~ ^~ - ~~  ^~ - ~
+```
 
 ---
 
 ## Presentation Outline
 
-- What is a bridge?
+- What is a Bridge?
 - Types of Bridges
 - Rialto Bridge
-    - Brief Interlude: Finality
-    - Architecture
-    - Applications
-- Live Demo
 - Future Plans
-    - Substrate <-> Substrate
-    - Becoming a Parachain
+- Live Demo
+
+---
+
+## Demo Prep - RLT
 
 ---
 
@@ -33,54 +55,47 @@ tl;dr: A way to connect two unrelated chains
 
 ## Custodial Bridges
 
-[ETH] -> [USDT] -> [BTC]
+[Chain A] -> [Central Party] -> [Chain B]
 
-- You can think of Tether as a custodial bridge
-- You trade your Ether for Tether, which you can swap for BTC
+- You send your Chain A token to the central party
+- Expectation is that they will credit your Chain B account correctly
 
-[ETH] -> [Central Party] -> [BTC]
+[BTC] -> [wBTC Foundation] -> [ETH]
 
-- You send your ETH to the central party
-- Expectation is that they will credit your account with correct amount of BTC
+- Example: Wrapped BTC on Ethereum
 
 ---
 
 ## Collateral Backed Bridges
 
-[ETH]            [BTC]
-    \ [Relayer] /
+[BTC] -> [ETH]
 
+- First you send your funds to a custodian
+- This custodian is staked on recipient chain
 
-- You send your funds to a multisig
+[BTC] -> [Custodian]
 
-[ETH] -> [Multisig]
+- You then send a proof-of-lock to recipient chain
 
-- Relayer is listening for "proof-of-lock" events from contract
-- Relays these proofs to recepient chain
+[PoL Tx] -> [ETH]
 
-[Relayer] -> Proof -> [BTC]
-
-- BTC is unlocked on receiving end
-- Relayer submits proof that they actually released funds
-- Important because if challenged they could get slashed on ETH
+- A smart contract then releases ETH
+- The ETH liquidity is provided by custodian on sender chain
+- Problem: BTC price > ETH collateral price
+- Example: XClaim BTC-Relay
 
 ---
 
 ## Trustless Bridges
 
-[ETH] -> [SUB]
+[Chain A] -> [Chain B]
 
 - Basically an on-chain light client for a foreign chain
 
-[ETH Headers] -> [SUB]
+[Chain A Headers] -> [Chain B]
 
 - A light client will track headers of the source chain
 - If applicable, needs to keep track of finality
-
-[ETH Tx] -> [SUB]
-
-- Now we can send an ETH Tx which locks funds
-- Bridge can verify by itself that the Tx is included in a valid block
 
 ---
 
@@ -114,10 +129,13 @@ tl;dr: A way to connect two unrelated chains
 - Authority sets change periodically
 - Blocks that signal these changes have a special log in the header
 
+- TODO: File issue for how to render this
 ```
-sp_runtime::DigestItem::Consensus(ConsensusEngineId, Vec<u8>)
-sp_finality_grandpa::ConsensusLog::ScheduledChange
+          / [C1] <- [D1]
+[A] <- [B] <- [C2] <- [D2]
+                  \ [D3] <- [E3]
 ```
+
 ---
 
 ## Rialto Architecture
@@ -126,12 +144,12 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 
 +-------------------+                +-------------------+
 |                   |                |                   |
-| Grandpa Built-In  |                |  Ethereum Bridge  |
-| Contract          |                |  Pallet           |
+| Substrate Header  |                |  Ethereum Bridge  |
+| Light Client      |                |  Pallet           |
 |                   |                |                   |
 |                   |                |  Currency Exchange|
 | Grandpa Finality  |                |  Pallet           |
-| Smart Contract    |                |                   |
+| Precompile        |                |                   |
 |                   |                |                   |
 |                   |                |                   |
 |                   |                |                   |
@@ -144,9 +162,28 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 [OpenEthereum Node]                 [Substrate Node]
                   \ [Bridge Relay] /
 
-- The chains can't acutally talk to eachother
+- The chains can't acutally talk to each other
 - Need a piece of helper software called a relay
 - Syncs each node and relays messages via RPC
+
+---
+
+TODO: Figure out proper rendering
+
+    ETH             SUB
+
+ +-------+       +-------+
+ |       |       |       |
+ |       |       |       |
+ |       |       |       |
+ +-------+       +-------+
+    ^                  ^
+    |                  |
+    |    +--------+    |
+RPC |    |        |    |  RPC
+    |    | Relay  |    |
+    +--> |        | <--+
+         +--------+
 
 ---
 
@@ -162,12 +199,6 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 
 ---
 
-<!-- effect=matrix-->
-
-# SHOW ME CODE!
-
----
-
 ## Future Plans
 
 [DOT] <-> [KSM]
@@ -177,7 +208,7 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 
 [ETH] <-> [DOT]
 
-- Want to connect Ethereum maininet to Substrate chains
+- Want to connect Ethereum mainnet to Substrate chains
 
 [DOT::Call] <-> [KSM::Call]
 
@@ -185,11 +216,9 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
 
 ---
 
-## Running the Code
+<!-- effect=matrix-->
 
-- Go to the `parity-bridges-common` repo
-- Can run simple Eth2Sub header sync using scripts in `./scripts` folder
-- Can do a full network deployment with `docker-compose`
+# SHOW ME CODE!
 
 ---
 ## Braindump
@@ -209,3 +238,4 @@ sp_finality_grandpa::ConsensusLog::ScheduledChange
     - Check to see if others were able to send tokens
 - Can show other bits and bobs
     - Deployment process
+    - Monitoring tools
