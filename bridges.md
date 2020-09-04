@@ -162,7 +162,7 @@ tl;dr: A way to connect two unrelated chains
 [OpenEthereum Node]                 [Substrate Node]
                   \ [Bridge Relay] /
 
-- The chains can't acutally talk to each other
+- The chains can't actually talk to each other
 - Need a piece of helper software called a relay
 - Syncs each node and relays messages via RPC
 
