@@ -99,7 +99,7 @@ tl;dr: A way to connect two unrelated chains
 
 ---
 
-## Railto Bridge
+## Rialto Bridge
 
 [PoA Ethereum] <-> [Substrate]
 
