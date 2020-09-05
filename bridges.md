@@ -91,6 +91,7 @@ tl;dr: A way to connect two unrelated chains
 [Chain A] -> [Chain B]
 
 - Basically an on-chain light client for a foreign chain
+- Light clients only follow headers and keep no state
 
 [Chain A Headers] -> [Chain B]
 
@@ -111,6 +112,7 @@ tl;dr: A way to connect two unrelated chains
 
 ## Authority Round (Aura) Consensus
 
+- Designed in Parity Ethereum days for stable a test network
 - Blocks are produced at regular intervals by trusted authorities
 - Authorities implicitly vote on blocks by building on blocks
 - A block is considered finalized if it has (n/2) + 1 votes
@@ -196,6 +198,57 @@ RPC |    |        |    |  RPC
 |                                        |
 |    Light Client Base Layer             |
 +----------------------------------------+
+
+---
+
+## Eth2Sub Header Sync
+
+```
+Rialto PoA             Bridge Relay             Substrate
+
+     +                      +                      +
+     |                      |  Best ETH header?    |
+     |                      | +------------------> |
+     |                      |                      |
+     |                      |    I know about X    |
+     | Any newer header?    | <------------------+ |
+     | <------------------+ |                      |
+     |                      |                      |
+     |                      |                      |
+     |  Yep, here you go    |                      |
+     | +------------------> |                      |
+     |                      | New headers incoming |
+     |                      | +------------------> |
+     |                      |                      |
+     |                      |                      |
+     |                      |                      |
+     +                      +                      +
+```
+---
+
+## Eth2Sub Currency Exchange
+
+```
+      Rialto PoA             Bridge Relay             Substrate
+
+Lock RLT   +                      +                      +
+   +-----+ |                      |                      |
+   |       |                      |                      |
+   +-----> |                      |                      |
+           |    Any CE Txs?       |                      |
+           | <------------------+ |                      |
+           |                      |                      |
+           |   Yep, here ya go    |                      |
+           | +------------------> |                      |
+           |                      |  Tx Inclusion Proof  |
+           |                      | +------------------> | +-----+
+           |                      |                      |       | In finalized header?
+           |                      |                      | <-----+
+           |                      |                      | +-----+
+           |                      |                      |       | Credit Funds
+           |                      |                      | <-----+
+           +                      +                      +
+```
 
 ---
 
