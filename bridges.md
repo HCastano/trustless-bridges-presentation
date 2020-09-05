@@ -220,7 +220,13 @@ Rialto PoA             Bridge Relay             Substrate
      |                      | New headers incoming |
      |                      | +------------------> |
      |                      |                      |
+     |                      |                      | +----+
+     |                      |                      |      | Verify headers
+     |                      |                      | <----+
      |                      |                      |
+     |                      |                      | +----+
+     |                      |                      |      | Import headers
+     |                      |                      | <----+
      |                      |                      |
      +                      +                      +
 ```
@@ -282,7 +288,7 @@ Lock RLT   +                      +                      +
 - Could show Rialto deployment dashboards next
     - Show them each of the header sync dashboards
     - Then show them the currency exchange dashboard
-- Could do a code walkthrough after that
+- Could do a code walk through after that
     - Show the Eth pallet
     - Then the CE pallet
     - If there's time, talk about the relay
