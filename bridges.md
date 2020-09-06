@@ -1,3 +1,5 @@
+<!-- fg=black bg=cyan -->
+
 # Trustless Bridges
 
 ### By: Hernando Castano | hernando@parity.io
@@ -27,6 +29,7 @@
 ```
 
 ---
+<!-- fg=black bg=cyan-->
 
 ## Presentation Outline
 
@@ -37,10 +40,12 @@
 - Live Demo
 
 ---
+<!-- effect=stars -->
 
 ## Demo Prep - RLT
 
 ---
+<!-- fg=black bg=green -->
 
 ## What is a Bridge?
 
@@ -52,6 +57,7 @@ tl;dr: A way to connect two unrelated chains
 - Trustless
 
 ---
+<!-- fg=black bg=green -->
 
 ## Custodial Bridges
 
@@ -65,6 +71,7 @@ tl;dr: A way to connect two unrelated chains
 - Example: Wrapped BTC on Ethereum
 
 ---
+<!-- fg=black bg=green -->
 
 ## Collateral Backed Bridges
 
@@ -85,6 +92,7 @@ tl;dr: A way to connect two unrelated chains
 - Example: XClaim BTC-Relay
 
 ---
+<!-- fg=black bg=green -->
 
 ## Trustless Bridges
 
@@ -99,6 +107,12 @@ tl;dr: A way to connect two unrelated chains
 - If applicable, needs to keep track of finality
 
 ---
+<!-- fg=black bg=blue-->
+
+# Rialto Bridge
+
+---
+<!-- fg=black bg=blue-->
 
 ## Rialto Bridge
 
@@ -109,6 +123,7 @@ tl;dr: A way to connect two unrelated chains
 - Substrate chain is using Grandpa consensus
 
 ---
+<!-- fg=black bg=blue-->
 
 ## Authority Round (Aura) Consensus
 
@@ -123,6 +138,7 @@ tl;dr: A way to connect two unrelated chains
         --- Finalized when C is built
 
 ---
+<!-- fg=black bg=blue-->
 
 ## Grandpa Consensus
 
@@ -139,6 +155,7 @@ tl;dr: A way to connect two unrelated chains
 ```
 
 ---
+<!-- fg=black bg=blue-->
 
 ## Rialto Architecture
 
@@ -158,6 +175,7 @@ tl;dr: A way to connect two unrelated chains
 +-------------------+                +-------------------+
 
 ---
+<!-- fg=black bg=blue-->
 
 ## Bridge Relay
 
@@ -169,6 +187,7 @@ tl;dr: A way to connect two unrelated chains
 - Syncs each node and relays messages via RPC
 
 ---
+<!-- fg=black bg=blue -->
 
 TODO: Figure out proper rendering
 
@@ -188,6 +207,7 @@ RPC |    |        |    |  RPC
          +--------+
 
 ---
+<!-- fg=black bg=blue-->
 
 ## Rialto Applications
 
@@ -200,6 +220,7 @@ RPC |    |        |    |  RPC
 +----------------------------------------+
 
 ---
+<!-- fg=black bg=blue -->
 
 ## Eth2Sub Header Sync
 
@@ -231,6 +252,7 @@ Rialto PoA             Bridge Relay             Substrate
      +                      +                      +
 ```
 ---
+<!-- fg=black bg=blue -->
 
 ## Eth2Sub Currency Exchange
 
@@ -257,6 +279,11 @@ Lock RLT   +                      +                      +
 ```
 
 ---
+<!-- fg=black bg=magenta -->
+
+# Future Plans
+---
+<!-- fg=black bg=magenta -->
 
 ## Future Plans
 
@@ -272,12 +299,6 @@ Lock RLT   +                      +                      +
 [DOT::Call] <-> [KSM::Call]
 
 - Arbitrary message passing between Substrate chains
-
----
-
-<!-- effect=matrix-->
-
-# SHOW ME CODE!
 
 ---
 ## Braindump
