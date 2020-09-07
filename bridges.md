@@ -319,3 +319,11 @@ Lock RLT   +                      +                      +
 [DOT] <-> [DOGE]
 
 - Who wouldn't want to see this?
+
+---
+<!-- effect=fireworks-->
+
+# Shout-Outs
+Slava Nikolsky (@svyatonik)
+Tomek Drwięga (@tomusdrw)
+Thibaut Sardan (@tbaut)
