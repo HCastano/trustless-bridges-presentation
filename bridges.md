@@ -319,29 +319,3 @@ Lock RLT   +                      +                      +
 [DOT] <-> [DOGE]
 
 - Who wouldn't want to see this?
-
----
-## Things to show
-
-- Deployment dasboard
-- Deployment process
-
----
-## Braindump
-
-- Could show a local version of Eth2Sub first
-    - Give people a feel for the header sync
-    - Show the dashboards
-- Could show Rialto deployment dashboards next
-    - Show them each of the header sync dashboards
-    - Then show them the currency exchange dashboard
-- Could do a code walk through after that
-    - Show the Eth pallet
-    - Then the CE pallet
-    - If there's time, talk about the relay
-- Finality, do a demo of the Rialto UI
-    - Send RLT -> SUB
-    - Check to see if others were able to send tokens
-- Can show other bits and bobs
-    - Deployment process
-    - Monitoring tools
