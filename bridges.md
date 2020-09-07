@@ -45,6 +45,10 @@
 
 ---
 <!-- fg=black bg=green -->
+Star Effect Refresh Haxx
+
+---
+<!-- fg=black bg=green -->
 
 ## What is a Bridge?
 
@@ -133,8 +137,9 @@ tl;dr: A way to connect two unrelated chains
 - If we had three validators: (3/2) + 1 = 2
 
 [A] <- [B] <- [C]
-        |
-        --- Finalized when C is built
+ |      |
+ |      --- Finalized when C is built
+ --- Finalized when B is built
 
 ---
 <!-- fg=black bg=blue-->
