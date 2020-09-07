@@ -2,7 +2,7 @@
 
 # Trustless Bridges
 
-### By: Hernando Castano | hernando@parity.io
+### By: Hernando Castano | @hernando:matrix.parity.io
 
 ```
                                            ^^
