@@ -37,7 +37,6 @@
 - Types of Bridges
 - Rialto Bridge
 - Future Plans
-- Live Demo
 
 ---
 <!-- effect=stars -->
@@ -147,7 +146,6 @@ tl;dr: A way to connect two unrelated chains
 - Authority sets change periodically
 - Blocks that signal these changes have a special log in the header
 
-- TODO: File issue for how to render this
 ```
           / [C1] <- [D1]
 [A] <- [B] <- [C2] <- [D2]
@@ -175,29 +173,15 @@ tl;dr: A way to connect two unrelated chains
 +-------------------+                +-------------------+
 
 ---
-<!-- fg=black bg=blue-->
+<!-- fg=black bg=blue -->
 
 ## Bridge Relay
 
-[OpenEthereum Node]                 [Substrate Node]
-                  \ [Bridge Relay] /
-
-- The chains can't actually talk to each other
-- Need a piece of helper software called a relay
-- Syncs each node and relays messages via RPC
-
----
-<!-- fg=black bg=blue -->
-
-TODO: Figure out proper rendering
-
-    ETH             SUB
-
- +-------+       +-------+
+ +--------+       +--------+
  |       |       |       |
+ |  ETH  |       |  SUB  |
  |       |       |       |
- |       |       |       |
- +-------+       +-------+
+ +--+----+       +-----+-+
     ^                  ^
     |                  |
     |    +--------+    |
@@ -211,12 +195,37 @@ RPC |    |        |    |  RPC
 
 ## Rialto Applications
 
-+--------------------+-------------------+
-|Currency Exchange   | Message Passing   |
-|                    |                   |
-+--------------------+-------------------+
++----------------------------------------|
 |                                        |
-|    Light Client Base Layer             |
+|          Currency Exchange             |
+|                                        |
++----------------------------------------+
+|                                        |
+|         Light Client Base Layer        |
+|                                        |
++----------------------------------------+
+
+---
+<!-- fg=black bg=blue-->
+
+## Rialto Applications
+
++----------------------------------------+
+|                                        |
+|          Your Application!             |
+|                                        |
++----------------------------------------+
+|                                        |
+|          Message Dispatch              |
+|                                        |
++----------------------------------------+
+|                                        |
+|          Message Delivery              |
+|                                        |
++----------------------------------------+
+|                                        |
+|         Light Client Base Layer        |
+|                                        |
 +----------------------------------------+
 
 ---
@@ -290,15 +299,27 @@ Lock RLT   +                      +                      +
 [DOT] <-> [KSM]
 
 - Want to connect Substrate based chains
-- May be in parachain form
-
-[ETH] <-> [DOT]
-
-- Want to connect Ethereum mainnet to Substrate chains
+- Important for sovereign chain communication
+- Potentially implement a bridge parachain
 
 [DOT::Call] <-> [KSM::Call]
 
 - Arbitrary message passing between Substrate chains
+
+[ETH] <-> [DOT]
+
+- Want to connect Ethereum mainnet to Substrate chains
+- More of a support role to other teams (e.g Snowfork)
+
+[DOT] <-> [DOGE]
+
+- Who wouldn't want to see this?
+
+---
+## Things to show
+
+- Deployment dasboard
+- Deployment process
 
 ---
 ## Braindump
