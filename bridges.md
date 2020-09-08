@@ -76,23 +76,21 @@ tl;dr: A way to connect two unrelated chains
 ---
 <!-- fg=black bg=green -->
 
-## Collateral Backed Bridges
+## Collateral Backed Bridges (XClaim)
 
-[BTC] -> [ETH]
-
-- First you send your funds to a custodian
-- This custodian is staked on recipient chain
-
-[BTC] -> [Custodian]
-
-- You then send a proof-of-lock to recipient chain
-
-[PoL Tx] -> [ETH]
-
-- A smart contract then releases ETH
-- The ETH liquidity is provided by custodian on sender chain
-- Problem: BTC price > ETH collateral price
-- Example: XClaim BTC-Relay
++----------------------+            +----------------------+
+|  BTC                 |            |                 ETH  |
+|           +-------+  |            |   +-------+          |
+|     1     |       |  |     0      |   |       |          |
+|   +---->  | Vault | +-------------->  |  S.C  | +--+     |
+|   |       |       |  |            |   |       |    |     |
+|   |       +-------+  |            |   +-------+    | 3   |
+|   |                  |            |                |     |
+|   |                  |            |       ^        v     |
+|   +                  |     2      |       |              |
+| Alice  +----------------------------------+      Alice   |
+|                      |            |                      |
++----------------------+            +----------------------+
 
 ---
 <!-- fg=black bg=green -->
