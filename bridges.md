@@ -118,6 +118,7 @@ tl;dr: A way to connect two unrelated chains
 - Two way trustless bridge between an Ethereum PoA chain and a Substrate chain
 - Ethereum chain is using Aura consensus
 - Substrate chain is using Grandpa consensus
+- Repo: https://github.com/paritytech/parity-bridges-common
 
 ---
 <!-- fg=black bg=blue-->
