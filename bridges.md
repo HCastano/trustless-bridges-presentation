@@ -45,10 +45,6 @@
 
 ---
 <!-- fg=black bg=green -->
-Star Effect Refresh Haxx
-
----
-<!-- fg=black bg=green -->
 
 ## What is a Bridge?
 
